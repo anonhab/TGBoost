@@ -635,15 +635,15 @@ footer {
 
     <div class="hero-stats">
       <div class="stat-item">
-        <span class="stat-num" data-target="24" data-suffix="">0</span>
-        <span class="stat-label">Parallel Accounts</span>
+        <span class="stat-num" id="stat-unlimited">∞</span>
+        <span class="stat-label">Accounts — No Limit</span>
       </div>
       <div class="stat-item">
-        <span class="stat-num green" data-target="960" data-suffix="+">0</span>
+        <span class="stat-num green" data-target="1000" data-suffix="+">0</span>
         <span class="stat-label">Members / Day</span>
       </div>
       <div class="stat-item">
-        <span class="stat-num amber" data-target="3" data-suffix="">0</span>
+        <span class="stat-num amber" data-target="10" data-suffix="+">0</span>
         <span class="stat-label">Target Groups</span>
       </div>
     </div>
@@ -674,7 +674,7 @@ footer {
       <div class="feat-card reveal">
         <span class="feat-icon">⚡</span>
         <div class="feat-name">Parallel Boosting</div>
-        <div class="feat-desc">Up to 24 accounts running simultaneously, each with independent sessions and its own scrape pipeline.</div>
+        <div class="feat-desc">Unlimited accounts running simultaneously. Add as many as you need — each gets its own session and independent scrape pipeline.</div>
         <span class="feat-tag cyan">High Throughput</span>
       </div>
 
@@ -841,43 +841,51 @@ const countObs = new IntersectionObserver(entries => {
 const statsEl = document.querySelector('.hero-stats');
 if (statsEl) countObs.observe(statsEl);
 
+// Pulse the ∞ symbol
+const unlimitedEl = document.getElementById('stat-unlimited');
+if (unlimitedEl) {
+  const frames = ['∞', '∞', '∞', '⊕', '∞', '∞', '∞', '⊗'];
+  let fi = 0;
+  setInterval(() => { unlimitedEl.textContent = frames[fi++ % frames.length]; }, 600);
+}
+
 // ── Fake terminal logs ─────────────────────────────────────────────────────
 const logs = [
-  { ts: '03:36:16', level: 'info',  msg: '24 healthy / 0 skipped accounts.' },
-  { ts: '03:36:16', level: 'info',  msg: 'Starting 24 workers, scraping 3 target group(s)…' },
-  { ts: '03:36:18', level: 'info',  msg: '[+251714583541] Daily budget: 40 invites remaining.' },
-  { ts: '03:36:19', level: 'info',  msg: '[+251714583541] Warm-up: reading destination history…' },
-  { ts: '03:36:21', level: 'info',  msg: '[+251714583541] Warm-up: read 11 messages.' },
-  { ts: '03:36:24', level: 'info',  msg: '[+251714583541] Warm-up done — browsed 7 profiles.' },
-  { ts: '03:36:25', level: 'info',  msg: '[+251707056225] Daily budget: 40 invites remaining.' },
-  { ts: '03:36:26', level: 'info',  msg: '[+251714583541] Fetching destination members…' },
-  { ts: '03:36:27', level: 'info',  msg: '[+251714583541] Destination has 10016 members.' },
-  { ts: '03:36:27', level: 'info',  msg: '[+251714583541] 5/40 invited' },
-  { ts: '03:36:29', level: 'info',  msg: '[+251707056225] Warm-up: reading destination history…' },
-  { ts: '03:36:31', level: 'info',  msg: '[+251707056225] Warm-up: read 9 messages.' },
-  { ts: '03:36:35', level: 'info',  msg: '[+251714583541] 10/40 invited' },
-  { ts: '03:36:37', level: 'info',  msg: '[+251707056225] Warm-up done — browsed 5 profiles.' },
-  { ts: '03:36:38', level: 'info',  msg: '[+251707056225] 5/40 invited' },
-  { ts: '03:36:44', level: 'info',  msg: '[+251714583541] 15/40 invited' },
-  { ts: '03:36:47', level: 'warn',  msg: '[+251704960879] FloodWait 18s — sleeping 23s…' },
-  { ts: '03:36:48', level: 'info',  msg: '[+251707056225] 10/40 invited' },
-  { ts: '03:36:52', level: 'info',  msg: '[+251714583541] 20/40 invited' },
-  { ts: '03:36:55', level: 'info',  msg: 't.me/HolyjobsGroup: 7152 new candidates (skipped 0 already-present)' },
-  { ts: '03:36:58', level: 'info',  msg: '[+251707056225] 15/40 invited' },
-  { ts: '03:37:02', level: 'info',  msg: '[+251714583541] 25/40 invited' },
-  { ts: '03:37:05', level: 'info',  msg: '[+251704960879] Flood wait done. Resuming…' },
-  { ts: '03:37:08', level: 'info',  msg: '[+251707056225] 20/40 invited' },
-  { ts: '03:37:10', level: 'info',  msg: '[+251714583541] 30/40 invited' },
-  { ts: '03:37:14', level: 'info',  msg: '[+251704960879] 5/40 invited' },
-  { ts: '03:37:16', level: 'info',  msg: '[+251707056225] 25/40 invited' },
-  { ts: '03:37:19', level: 'info',  msg: '[+251714583541] 35/40 invited' },
-  { ts: '03:37:22', level: 'info',  msg: '[+251704729916] Daily budget: 40 invites remaining.' },
-  { ts: '03:37:24', level: 'info',  msg: '[+251714583541] Done — 40 users invited.' },
-  { ts: '03:37:26', level: 'info',  msg: '[+251707056225] 30/40 invited' },
-  { ts: '03:37:29', level: 'info',  msg: '[+251704960879] 10/40 invited' },
-  { ts: '03:37:33', level: 'info',  msg: '[+251707056225] Done — 40 users invited.' },
-  { ts: '03:37:36', level: 'info',  msg: 't.me/mergetataaa: 7401 new candidates' },
-  { ts: '03:38:44', level: 'info',  msg: '✓ Boost finished. 960 users invited across 24 accounts.' },
+  { ts: '08:12:03', level: 'info',  msg: '12 healthy / 0 skipped accounts.' },
+  { ts: '08:12:03', level: 'info',  msg: 'Starting 12 workers, scraping 4 target group(s)…' },
+  { ts: '08:12:06', level: 'info',  msg: '[Account #1] Daily budget: 50 invites remaining.' },
+  { ts: '08:12:07', level: 'info',  msg: '[Account #1] Warm-up: reading destination history…' },
+  { ts: '08:12:09', level: 'info',  msg: '[Account #1] Warm-up: read 14 messages.' },
+  { ts: '08:12:13', level: 'info',  msg: '[Account #1] Warm-up done — browsed 9 profiles.' },
+  { ts: '08:12:14', level: 'info',  msg: '[Account #2] Daily budget: 50 invites remaining.' },
+  { ts: '08:12:15', level: 'info',  msg: '[Account #1] Fetching destination members…' },
+  { ts: '08:12:16', level: 'info',  msg: '[Account #1] Destination has 8340 members.' },
+  { ts: '08:12:17', level: 'info',  msg: '[Account #1] 5/50 invited' },
+  { ts: '08:12:18', level: 'info',  msg: '[Account #2] Warm-up: reading destination history…' },
+  { ts: '08:12:20', level: 'info',  msg: '[Account #2] Warm-up: read 11 messages.' },
+  { ts: '08:12:24', level: 'info',  msg: '[Account #1] 10/50 invited' },
+  { ts: '08:12:26', level: 'info',  msg: '[Account #2] Warm-up done — browsed 6 profiles.' },
+  { ts: '08:12:27', level: 'info',  msg: '[Account #2] 5/50 invited' },
+  { ts: '08:12:33', level: 'info',  msg: '[Account #1] 15/50 invited' },
+  { ts: '08:12:36', level: 'warn',  msg: '[Account #3] FloodWait 22s — sleeping 27s…' },
+  { ts: '08:12:37', level: 'info',  msg: '[Account #2] 10/50 invited' },
+  { ts: '08:12:41', level: 'info',  msg: '[Account #1] 20/50 invited' },
+  { ts: '08:12:44', level: 'info',  msg: 't.me/targetgroup1: 9200 new candidates (skipped 0 already-present)' },
+  { ts: '08:12:47', level: 'info',  msg: '[Account #2] 15/50 invited' },
+  { ts: '08:12:51', level: 'info',  msg: '[Account #1] 25/50 invited' },
+  { ts: '08:12:54', level: 'info',  msg: '[Account #3] Flood wait done. Resuming…' },
+  { ts: '08:12:57', level: 'info',  msg: '[Account #2] 20/50 invited' },
+  { ts: '08:12:59', level: 'info',  msg: '[Account #1] 30/50 invited' },
+  { ts: '08:13:03', level: 'info',  msg: '[Account #3] 5/50 invited' },
+  { ts: '08:13:05', level: 'info',  msg: '[Account #2] 25/50 invited' },
+  { ts: '08:13:08', level: 'info',  msg: '[Account #1] 40/50 invited' },
+  { ts: '08:13:11', level: 'info',  msg: '[Account #4] Daily budget: 50 invites remaining.' },
+  { ts: '08:13:13', level: 'info',  msg: '[Account #1] Done — 50 users invited.' },
+  { ts: '08:13:15', level: 'info',  msg: '[Account #2] 30/50 invited' },
+  { ts: '08:13:18', level: 'info',  msg: '[Account #3] 10/50 invited' },
+  { ts: '08:13:21', level: 'info',  msg: '[Account #2] Done — 50 users invited.' },
+  { ts: '08:13:24', level: 'info',  msg: 't.me/targetgroup2: 8850 new candidates' },
+  { ts: '08:14:55', level: 'info',  msg: '✓ Boost finished. 600 users invited across 12 accounts.' },
 ];
 
 const termBody = document.getElementById('term-body');
